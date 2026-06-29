@@ -1,0 +1,115 @@
+# MØDE — Hermes Agent configuration
+# Non-secret settings only. Secrets (NVIDIA_API_KEY, etc.) live in ~/.hermes/.env.
+# Lives in HERMES_HOME alongside SOUL.md / AGENTS.md / MEMORY.md / USER.md.
+#
+# Prefer setting values via `hermes config set <key> <value>` — it routes secrets to
+# .env and non-secrets here automatically, and validates keys against the live schema.
+# Keys marked (verify) are inferred from the MØDE setup notes; confirm the exact name
+# with `hermes config get <key>` or the Hermes docs before relying on them.
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Model — Nemotron via NVIDIA NIM, with a fallback so a NIM outage never takes the
+# tutor down mid-session. NVIDIA_API_KEY (and optional NVIDIA_BASE_URL) go in .env.
+# ──────────────────────────────────────────────────────────────────────────────
+model:
+  provider: nvidia                       # NVIDIA NIM / build.nvidia.com (or local NIM)
+  name: nvidia/nemotron-3-ultra
+  min_context_tokens: 64000              # Hermes rejects anything below this at startup
+
+  # Automatic failover on provider errors. Keep a backup that clears 64k context.
+  fallback_providers:                    # (verify exact key)
+    - provider: portal
+      name: nvidia/nemotron-3-ultra
+    # - provider: anthropic
+    #   name: claude-...                 # optional second fallback if you keep an Anthropic key
+
+  # Optional resilience for a live product (uncomment as you wire keys):
+  # provider_routing:                    # sort/whitelist/blacklist by cost/speed/quality
+  #   sort: quality
+  # credential_pools: true               # rotate across multiple keys on rate limits
+  # prompt_caching: true                 # 1-hour prefix cache where supported
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Toolsets — deny-by-default (Blank Slate posture). Nothing loads unless it's on
+# the allowlist, even after `hermes update`. Right baseline for a kids' product.
+# Enable a toolset only once it's been vetted for child safety.
+# ──────────────────────────────────────────────────────────────────────────────
+platform_toolsets:
+  cli:                                   # explicit allowlist — the ONLY tools that load
+    - file_operations
+    - terminal                           # sandboxed (see terminal.backend below)
+    - memory                             # MEMORY.md / USER.md pedagogical state
+    - skills                             # the MØDE curriculum
+    # Deliberately NOT enabled yet — turn on only after vetting:
+    #   web_search, browser, vision, delegation, cron, mcp, code_execution
+
+agent:
+  # Belt-and-braces: hard-disable everything not vetted, even if a default flips it on.
+  disabled_toolsets:
+    - web_search
+    - browser
+    - vision
+    - delegation
+    - cron
+    - mcp
+
+  # System-prompt context files (HERMES_HOME). SOUL.md is slot #1 automatically;
+  # these are the task/context layer beneath it.
+  context_files:                         # (verify exact key)
+    - AGENTS.md
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # Per-age-tier personality overlays. Switched per learner via /personality.
+  # These calibrate VOICE only — they never override SOUL.md or mode-child-safety.
+  # ────────────────────────────────────────────────────────────────────────────
+  personalities:
+    mode-explorer:                       # ages 5–7
+      description: Warmest, simplest voice for the youngest learners.
+      prompt: >
+        You are speaking with a learner aged 5–7. Keep every turn very short — one
+        tiny step at a time. Use visual and physical comparisons (blocks, steps,
+        jumps) instead of abstract terms. Lots of warmth and celebration of effort.
+        One idea per turn. Never more than a sentence or two before handing back.
+
+    mode-builder:                        # ages 8–12
+      description: Connects code to the math for middle learners.
+      prompt: >
+        You are speaking with a learner aged 8–12. Connect code to the math
+        (a variable ≈ remembering a number; coordinates ≈ a position). Build small
+        games and projects. Always have them predict before they run. Praise the
+        thinking and the testing, not just correct answers.
+
+    mode-engineer:                       # ages 13–15
+      description: Invites deeper reasoning for older learners.
+      prompt: >
+        You are speaking with a learner aged 13–15. Invite reasoning about WHY,
+        edge cases, and efficiency. Let them struggle productively a little longer
+        before you step in. Still never hand over the answer — escalate hints only
+        as far as they actually need.
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Terminal — sandboxed execution is essential before any untrusted code runs.
+# Docker gives container isolation for the AGENT's own tools. NOTE: the CHILD's
+# in-browser coding sandbox (Sandpack/Pyodide) is a separate front-end concern and
+# must NOT run through this terminal.
+# ──────────────────────────────────────────────────────────────────────────────
+terminal:
+  backend: docker                        # container isolation (alt: ssh for remote)
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Memory — bounded, curated pedagogical state. Schema and rules in MEMORY.md.
+# Store mastery & ZPD, never transcripts. A memory provider can back this per-learner
+# at scale; left at the built-in file model here.
+# ──────────────────────────────────────────────────────────────────────────────
+memory:
+  enabled: true
+  # provider: honcho                     # (optional) pluggable provider keyed per learner
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Hooks — lifecycle insertion points for guardrails / content moderation of tutor
+# messages, and the natural seam for a NemoClaw / NeMo Guardrails layer.
+# Author and TEST the child-safety policies before enabling in production.
+# ──────────────────────────────────────────────────────────────────────────────
+# hooks:                                 # (verify exact key + hook names)
+#   pre_tool:  ./hooks/moderate_input.py
+#   post_tool: ./hooks/moderate_output.py
