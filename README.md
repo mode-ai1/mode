@@ -28,15 +28,15 @@ The project is a hackathon entry for the **Hermes Agent Accelerated Business Hac
 
 ## ❄️ Our story
 
-We are **three developers from South Africa**. We didn't start with a lab, a grant, or a server rack — we started with a frustration we couldn't shake.
+We are **three developers from South Africa**. We didn't start with a lab, a grant, or a server rack. We started with a frustration we couldn't shake.
 
-We grew up around classrooms where maths was something to *survive*, not love. Thirty-plus kids to a teacher. Rote drills. A quiet message, repeated until it stuck: *some people just aren't "maths people."* We watched bright, curious friends count themselves out of futures they could have owned — not because they couldn't think, but because nobody ever showed them that maths is just **logic you can play with**, and that code is the place you get to play.
+We grew up around classrooms where maths was something to *survive*, not love. Thirty-plus kids to a teacher. Rote drills. A quiet message, repeated until it stuck: *some people just aren't "maths people."* We watched bright, curious friends count themselves out of futures they could have owned, not because they couldn't think, but because nobody ever showed them that maths is just **logic you can play with**, and that code is the place you get to play.
 
-So we decided to build the thing we wished we'd had: a patient tutor that never sighs, never rushes, never makes a child feel small for asking — one that teaches maths *through* code, one question at a time, meeting every learner exactly where they are.
+So we decided to build the thing we wished we'd had: a patient tutor that never sighs, never rushes, never makes a child feel small for asking. One that teaches maths *through* code, one question at a time, meeting every learner exactly where they are.
 
-We had no funding. What we had was a **second-hand x96 Android TV box** — **2 GB of RAM and 32 GB of storage** — sitting on a desk between the three of us. That little box is our entire "data centre." Every line of this project, every page of research, every late night, runs on hardware that costs less than a textbook. When people ask how a company can run on "structurally low marginal cost," we don't theorise — we point at the box.
+We had no funding. What we had was a **second-hand x96 Android TV box** with **2 GB of RAM and 32 GB of storage**, sitting on a desk between the three of us. That little box is our entire "data centre." Every line of this project, every page of research, every late night, runs on hardware that costs less than a textbook. When people ask how a company can run on "structurally low marginal cost," we don't theorise. We point at the box.
 
-It's not glamorous. It overheats. We've restarted it more times than we can count. But it's *ours*, and it's proof of the only thing we really believe: that the next kid who thinks they're "not a maths person" is wrong — and that you don't need a fortune to prove it to them. You need patience, a good idea, and refusal to quit.
+It's not glamorous. It overheats. We've restarted it more times than we can count. But it's *ours*, and it's proof of the only thing we really believe: that the next kid who thinks they're "not a maths person" is wrong, and that you don't need a fortune to prove it to them. You need patience, a good idea, and a refusal to quit.
 
 > Built from Mzansi 🇿🇦, on 2 GB of RAM and a whole lot of stubbornness.
 
