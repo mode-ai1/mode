@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MØDE Scholars: Cultivating young genius through high-tier Socratic tutoring and inquiry-based learning.">
+    <title>MØDE Scholars | Nurture the Genius Within</title>
+    <link rel="stylesheet" href="mode-scholars.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo" style="text-decoration:none">MØDE <span>SCHOLARS</span></a>
+        <div class="nav-links">
+            <a href="#method">The Method</a>
+            <a href="#program">Program</a>
+            <a href="learner-dashboard.html">Live Demo</a>
+            <a href="index.html">MØDE Core</a>
+        </div>
+        <a href="#apply" class="nav-cta">Request Invitation</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-subtitle">Elite Enrichment for Gifted Minds</div>
+        <h1>Nurture the <span class="text-gradient">Genius Within.</span></h1>
+        <p>A highly selective, intellectually rigorous Socratic tutoring program designed to challenge assumptions, foster divergent thinking, and cultivate the next generation of visionary leaders.</p>
+        <a href="#apply" class="primary-btn">Join the Waitlist</a>
+    </header>
+
+    <!-- The Method Section -->
+    <section id="method" class="method-section">
+        <div class="section-header">
+            <h2>The <span class="text-gold">Scholars</span> Pedagogy</h2>
+            <p>Moving beyond rote memorization and standard acceleration. We build cognitive resilience through advanced philosophical inquiry.</p>
+        </div>
+
+        <div class="cards-container">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+                <h3>Advanced Socratic Seminars</h3>
+                <p>AI-driven dialogues that challenge assumptions and demand rigorous evidence. Students shift from passive learners to active participants in discovery, analyzing complex cross-disciplinary concepts.</p>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-code-branch"></i></div>
+                <h3>Divergent Thinking</h3>
+                <p>We replace the pursuit of a single "right" answer with the exploration of ambiguity. Our curriculum compacting allows gifted minds to skip mastered material and focus on high-level problem solving.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-compass"></i></div>
+                <h3>Cognitive Resilience</h3>
+                <p>Cultivating genius requires a safe environment for intellectual risk-taking. We focus on identity development, intellectual humility, and the metacognitive skills needed to handle profound challenges.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="program" class="comparison-section">
+        <div class="section-header">
+            <h2>Two Paths. <span class="text-gradient">One Mission.</span></h2>
+            <p>Whether bridging the gap or pushing the boundaries of potential, MØDE adapts to the learner.</p>
+        </div>
+
+        <div class="comparison-grid">
+            <div class="tier">
+                <h3>MØDE Core</h3>
+                <p>Accessible, one-to-one Socratic tutoring to help students gain ground and build foundational confidence.</p>
+                <ul>
+                    <li>Curriculum alignment & gap bridging</li>
+                    <li>Foundational Socratic questioning</li>
+                    <li>Confidence and skill building</li>
+                    <li>Broadly accessible platform</li>
+                </ul>
+                <br>
+                <a href="index.html" style="color: var(--text-secondary); text-decoration: underline;">Explore MØDE Core</a>
+            </div>
+
+            <div class="tier elite">
+                <div class="tier-badge">HIGH-TIER</div>
+                <h3 class="text-gold">MØDE Scholars</h3>
+                <p>An elite, immersive program for profoundly gifted youth requiring extreme intellectual stimulation.</p>
+                <ul>
+                    <li>Curriculum compacting & acceleration</li>
+                    <li>Advanced perspective-taking & metacognition</li>
+                    <li>Interdisciplinary complex problem solving</li>
+                    <li>Exclusive cohort access</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="apply" class="cta-section">
+        <div class="cta-container">
+            <h2>Limited Availability</h2>
+            <p>To maintain the highest level of rigorous dialogue, MØDE Scholars operates on an invitation and waitlist basis. Secure your child's position in our upcoming cohort.</p>
+            
+            <form class="waitlist-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Waitlist application submitted!');">
+                <input type="email" placeholder="Enter parent email address" required>
+                <button type="submit" class="primary-btn">Request Invitation</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">MØDE <span>SCHOLARS</span></div>
+        <p>&copy; 2026 MØDE Educational Technologies. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple scroll reveal animation for elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.card, .tier').forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

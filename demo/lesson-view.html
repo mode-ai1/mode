@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MØDE | Lesson View — Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#0a0a0f; --bg-panel:rgba(20,20,30,.6); --bg-panel-solid:#14141e;
+  --primary:#00f0ff; --secondary:#ff007f; --accent:#8a2be2;
+  --text-main:#fff; --text-muted:#a0a0b0;
+  --glass-border:rgba(255,255,255,.1);
+  --ok:#39d98a; --warn:#ffb020; --err:#ff5470;
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg-dark); color:var(--text-main); font-family:'Inter',sans-serif;
+  overflow:hidden;
+  background-image:radial-gradient(circle at 15% 10%,rgba(138,43,226,.18),transparent 40%),
+                   radial-gradient(circle at 85% 90%,rgba(0,240,255,.12),transparent 40%);
+}
+.wire-badge{position:fixed;bottom:10px;left:14px;z-index:50;font-size:11px;letter-spacing:.12em;
+  color:var(--text-muted);border:1px solid var(--glass-border);padding:3px 10px;border-radius:99px;background:var(--bg-panel)}
+
+/* ---------- top bar ---------- */
+.topbar{height:60px;display:flex;align-items:center;gap:20px;padding:0 22px;
+  border-bottom:1px solid var(--glass-border);background:rgba(10,10,15,.7);backdrop-filter:blur(10px)}
+.logo{font-family:'Outfit',sans-serif;font-weight:900;font-size:22px;letter-spacing:.5px}
+.logo .o{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.crumb{color:var(--text-muted);font-size:13px}
+.crumb b{color:var(--text-main);font-weight:600}
+.topbar .spacer{flex:1}
+.progress-wrap{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-muted)}
+.bar{width:140px;height:7px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar>i{display:block;height:100%;width:42%;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.xp{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.xp .coin{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;
+  background:linear-gradient(135deg,var(--warn),var(--secondary))}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary));
+  display:grid;place-items:center;font-weight:700;font-size:14px}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:230px 1fr 360px;height:calc(100vh - 60px)}
+aside,.workspace{height:100%;overflow:hidden}
+.panel-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-muted);margin-bottom:10px}
+
+/* ---------- left sidebar ---------- */
+.sidebar{border-right:1px solid var(--glass-border);padding:18px 16px;overflow-y:auto;background:rgba(15,15,22,.4)}
+.module-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;margin-bottom:4px}
+.module-sub{font-size:12px;color:var(--text-muted);margin-bottom:18px}
+.steps{list-style:none;display:flex;flex-direction:column;gap:4px}
+.step{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;font-size:13px;color:var(--text-muted);cursor:pointer}
+.step:hover{background:rgba(255,255,255,.04)}
+.step .dot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.18);display:grid;place-items:center;font-size:10px;flex:none}
+.step.done{color:var(--text-main)}
+.step.done .dot{background:var(--ok);border-color:var(--ok);color:#04130c}
+.step.active{background:linear-gradient(90deg,rgba(0,240,255,.12),transparent);color:#fff;font-weight:600}
+.step.active .dot{border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,240,255,.15)}
+.streak{margin-top:22px;padding:12px;border-radius:12px;border:1px solid var(--glass-border);
+  background:var(--bg-panel);font-size:12px;color:var(--text-muted)}
+.streak b{color:var(--warn)}
+
+/* ---------- workspace (center) ---------- */
+.workspace{display:flex;flex-direction:column;gap:14px;padding:16px;overflow:hidden}
+.card{background:var(--bg-panel);border:1px solid var(--glass-border);border-radius:var(--radius);backdrop-filter:blur(8px)}
+
+/* graph panel */
+.graph-card{flex:1 1 52%;display:flex;flex-direction:column;padding:16px;min-height:0}
+.graph-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.graph-head h3{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700}
+.eq{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--primary);
+  background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.25);padding:5px 12px;border-radius:8px}
+.graph-body{flex:1;display:grid;grid-template-columns:1fr 180px;gap:14px;min-height:0}
+.canvas-wrap{position:relative;border-radius:12px;overflow:hidden;background:rgba(0,0,0,.25);min-height:0}
+canvas{display:block;width:100%;height:100%}
+.controls{display:flex;flex-direction:column;gap:14px;font-size:12px}
+.ctrl label{display:flex;justify-content:space-between;color:var(--text-muted);margin-bottom:6px}
+.ctrl label b{color:var(--text-main);font-family:'JetBrains Mono',monospace}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.tbl{margin-top:auto;border:1px solid var(--glass-border);border-radius:10px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:11px}
+.tbl div{display:flex;justify-content:space-between;padding:5px 10px}
+.tbl div:nth-child(odd){background:rgba(255,255,255,.03)}
+.tbl .h{background:rgba(138,43,226,.18);color:#fff}
+.tip{font-size:11px;color:var(--text-muted);margin-top:8px;display:flex;gap:6px;align-items:center}
+.tip:before{content:"💡"}
+.concept-tabs{display:flex;gap:6px;margin:0 0 12px}
+.ctab{font-size:12px;color:var(--text-muted);background:rgba(255,255,255,.04);border:1px solid var(--glass-border);padding:6px 12px;border-radius:99px;cursor:pointer}
+.ctab.active{color:#fff;border-color:transparent;background:linear-gradient(135deg,rgba(0,240,255,.2),rgba(138,43,226,.2))}
+.cgroup{display:flex;flex-direction:column;gap:14px}
+.cgroup[hidden]{display:none}
+
+/* code terminal */
+.code-card{flex:1 1 48%;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.code-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--glass-border)}
+.dotz{display:flex;gap:6px}.dotz i{width:11px;height:11px;border-radius:50%}
+.dotz i:nth-child(1){background:#ff5f57}.dotz i:nth-child(2){background:#febc2e}.dotz i:nth-child(3){background:#28c840}
+.code-head .fname{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted)}
+.code-head .spacer{flex:1}
+.run{display:flex;align-items:center;gap:6px;border:none;cursor:pointer;font-weight:600;font-size:13px;color:#04130c;
+  background:linear-gradient(135deg,var(--ok),var(--primary));padding:7px 16px;border-radius:8px}
+.run:active{transform:translateY(1px)}
+.code-split{flex:1;display:grid;grid-template-rows:1.4fr 1fr;min-height:0}
+.editor{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:#d7e3ff;background:#0d0d15;
+  border:none;outline:none;resize:none;padding:14px;width:100%;height:100%;tab-size:2}
+.console{background:#08080d;border-top:1px solid var(--glass-border);padding:10px 14px;overflow-y:auto;
+  font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7}
+.console .ln{white-space:pre-wrap}
+.console .muted{color:var(--text-muted)}
+.console .err{color:var(--err)}
+.console .ok{color:var(--ok)}
+
+/* ---------- chat panel (right) ---------- */
+.chat{border-left:1px solid var(--glass-border);display:flex;flex-direction:column;background:rgba(15,15,22,.5)}
+.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--glass-border)}
+.tutor-ava{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:'Outfit';font-weight:900;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));color:#06060a;position:relative}
+.tutor-ava:after{content:"";position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--ok);border:2px solid var(--bg-dark)}
+.chat-head .who{font-family:'Outfit';font-weight:700;font-size:14px}
+.chat-head .role{font-size:11px;color:var(--text-muted)}
+.messages{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:14px}
+.msg{display:flex;gap:9px;max-width:90%}
+.msg .b{padding:11px 14px;border-radius:16px;font-size:13.5px;line-height:1.55}
+.msg.tutor{align-self:flex-start}
+.msg.tutor .b{background:var(--bg-panel-solid);border:1px solid var(--glass-border);border-top-left-radius:4px}
+.msg.tutor .mini{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:11px;font-weight:800;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));color:#06060a}
+.msg.me{align-self:flex-end;flex-direction:row-reverse}
+.msg.me .b{background:linear-gradient(135deg,var(--accent),#5b2a9e);border-top-right-radius:4px}
+.msg .b code{font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(0,0,0,.35);padding:1px 5px;border-radius:5px}
+.typing .b{display:flex;gap:4px;align-items:center}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--text-muted);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.suggest{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px}
+.chip{font-size:12px;color:var(--primary);border:1px solid rgba(0,240,255,.3);background:rgba(0,240,255,.06);
+  padding:6px 12px;border-radius:99px;cursor:pointer}
+.chip:hover{background:rgba(0,240,255,.14)}
+.composer{display:flex;align-items:center;gap:8px;padding:12px 14px;border-top:1px solid var(--glass-border)}
+.composer input{flex:1;background:var(--bg-panel-solid);border:1px solid var(--glass-border);border-radius:99px;
+  padding:11px 16px;color:#fff;font-size:13.5px;outline:none}
+.composer input:focus{border-color:var(--primary)}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;flex:none;
+  background:linear-gradient(135deg,var(--primary),var(--accent));color:#06060a;font-size:16px}
+.icon-btn.ghost{background:rgba(255,255,255,.06);color:var(--text-muted)}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:8px}
+/* shared nav */
+.gn-links{display:flex;gap:4px;align-items:center}
+.gn-links a{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-muted);text-decoration:none;padding:6px 11px;border-radius:8px}
+.gn-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.gn-links a.on{color:#fff;background:linear-gradient(135deg,rgba(0,240,255,.18),rgba(138,43,226,.18))}
+a.logo{text-decoration:none;color:inherit}
+@media(max-width:1100px){.gn-links{display:none}}
+</style>
+</head>
+<body>
+<div class="wire-badge">WIREFRAME · LESSON VIEW</div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="logo" href="index.html">M<span class="o">Ø</span>DE</a>
+  <nav class="gn-links">
+    <a href="index.html">Home</a>
+    <a href="learner-dashboard.html">Learner</a>
+    <a href="lesson-view.html" class="on">Lesson</a>
+    <a href="parent-dashboard.html">Parent</a>
+  </nav>
+  <div class="crumb">Patterns &amp; Sequences&nbsp; ›&nbsp; <b>Lesson 3 · Growing Patterns &amp; the Rule</b></div>
+  <div class="spacer"></div>
+  <div class="progress-wrap">Lesson progress <div class="bar"><i></i></div> 42%</div>
+  <div class="xp"><span class="coin">★</span> 1,240 XP</div>
+  <div class="avatar">SA</div>
+</header>
+
+<div class="shell">
+  <!-- LEFT: lesson steps -->
+  <aside class="sidebar">
+    <div class="module-title">Growing Patterns</div>
+    <div class="module-sub">Ages 9–13 · Builder tier</div>
+    <ul class="steps">
+      <li class="step done"><span class="dot">✓</span> Spot the repeat</li>
+      <li class="step done"><span class="dot">✓</span> What changes each step?</li>
+      <li class="step active"><span class="dot">3</span> Name the rule</li>
+      <li class="step"><span class="dot">4</span> Predict the 10th term</li>
+      <li class="step"><span class="dot">5</span> Code the sequence</li>
+      <li class="step"><span class="dot">6</span> Challenge: doubling</li>
+    </ul>
+    <div class="streak">🔥 <b>4-day streak</b><br>Keep going — finish today to make it 5!</div>
+  </aside>
+
+  <!-- CENTER: graph + code -->
+  <main class="workspace">
+    <!-- interactive graph -->
+    <section class="card graph-card">
+      <div class="graph-head">
+        <h3 id="gTitle">📈 The rule, drawn</h3>
+        <div class="eq" id="eq">y = 3x + 2</div>
+      </div>
+      <div class="concept-tabs" id="conceptTabs">
+        <button class="ctab active" data-mode="linear">📈 Linear rule</button>
+        <button class="ctab" data-mode="bars">📊 Bar chart</button>
+        <button class="ctab" data-mode="geo">📐 Geometry</button>
+      </div>
+      <div class="graph-body">
+        <div class="canvas-wrap"><canvas id="plot"></canvas></div>
+        <div class="controls">
+          <div class="panel-label">Try it</div>
+          <!-- linear-rule controls -->
+          <div class="cgroup" data-g="linear">
+            <div class="ctrl"><label>Step size (slope) <b id="mVal">3</b></label>
+              <input type="range" id="m" min="-5" max="5" step="1" value="3"></div>
+            <div class="ctrl"><label>Start value <b id="bVal">2</b></label>
+              <input type="range" id="b" min="-8" max="8" step="1" value="2"></div>
+          </div>
+          <!-- bar-chart controls -->
+          <div class="cgroup" data-g="bars" hidden>
+            <div class="ctrl"><label>Legs per spider <b id="perVal">8</b></label>
+              <input type="range" id="per" min="1" max="10" step="1" value="8"></div>
+            <div class="ctrl"><label>Number of spiders <b id="grpVal">4</b></label>
+              <input type="range" id="grp" min="1" max="8" step="1" value="4"></div>
+          </div>
+          <!-- geometry controls -->
+          <div class="cgroup" data-g="geo" hidden>
+            <div class="ctrl"><label>Width <b id="gwVal">6</b></label>
+              <input type="range" id="gw" min="1" max="10" step="1" value="6"></div>
+            <div class="ctrl"><label>Height <b id="ghVal">4</b></label>
+              <input type="range" id="gh" min="1" max="8" step="1" value="4"></div>
+          </div>
+          <div class="tbl" id="tbl"></div>
+        </div>
+      </div>
+      <div class="tip" id="tip"><span>Drag the sliders — watch how "add 3 each time" reshapes the line.</span></div>
+    </section>
+
+    <!-- code terminal -->
+    <section class="card code-card">
+      <div class="code-head">
+        <div class="dotz"><i></i><i></i><i></i></div>
+        <span class="fname">sequence.js</span>
+        <div class="spacer"></div>
+        <button class="run" id="runBtn">▶ Run</button>
+      </div>
+      <div class="code-split">
+        <textarea class="editor" id="editor" spellcheck="false">//Based on the graph above, what would you say is the rule draw?
+// Enter your answer below.
+</textarea>
+          <!-- <textarea class="editor" id="editor" spellcheck="false">
+          // Predict the output BEFORE you run it!
+          // Rule: start at 2, then add 3 each step.
+          let value = 2;
+          for (let step = 1; step <= 5; step++) {
+            console.log("Step " + step + " -> " + value);
+            value = value + 3;
+          }
+        </textarea> -->
+        <div class="console" id="console"><span class="ln muted">▸ Output appears here after you press Run.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RIGHT: chat -->
+  <aside class="chat">
+    <div class="chat-head">
+      <div class="tutor-ava">MØ</div>
+      <div>
+        <div class="who">MØDE Tutor</div>
+        <div class="role">Socratic · here to help you think</div>
+      </div>
+    </div>
+    <div class="messages" id="messages">
+      <div class="msg tutor"><div class="mini">MØ</div><div class="b">Nice work spotting that the numbers keep going up! 👀 Before we touch the code — what do you think <b>changes</b> from one number to the next in 2, 5, 8, 11?</div></div>
+      <div class="msg me"><div class="b">it gets bigger by 3?</div></div>
+      <div class="msg tutor"><div class="mini">MØ</div><div class="b">Exactly — you found the <b>rule</b>: <code>add 3</code>. So if your rule is "add 3 each time," how could you make the computer do that 5 times instead of typing every number? Add your code to the editor in sequence.js.</div></div>
+    </div>
+    <div class="suggest" id="suggest">
+      <!-- <span class="chip">Use a loop?</span> -->
+      <span class="chip">I'm stuck</span>
+      <span class="chip">Show me a hint</span>
+    </div>
+    <div class="composer">
+      <button class="icon-btn ghost" title="Voice">🎤</button>
+      <input id="chatInput" placeholder="Ask MØDE anything…">
+      <button class="icon-btn" id="sendBtn" title="Send">➤</button>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* ---------------- interactive graph: 3 concept modes ---------------- */
+const cv=document.getElementById('plot'), ctx=cv.getContext('2d'), dpr=window.devicePixelRatio||1;
+const $=id=>document.getElementById(id);
+let mode='linear';
+
+function resize(){const r=cv.parentElement.getBoundingClientRect();cv.width=r.width*dpr;cv.height=r.height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw();}
+const dims=()=>({W:cv.width/dpr,H:cv.height/dpr});
+function setTip(html){$('tip').innerHTML='<span>'+html+'</span>';}
+function setTbl(rows){$('tbl').innerHTML=rows;}
+
+function draw(){const {W,H}=dims();ctx.clearRect(0,0,W,H);
+  if(mode==='linear')drawLinear(W,H);
+  else if(mode==='bars')drawBars(W,H);
+  else drawGeo(W,H);}
+
+/* --- linear rule: y = mx + b --- */
+function drawLinear(W,H){
+  const m=+$('m').value, b=+$('b').value;
+  $('mVal').textContent=m;$('bVal').textContent=b;
+  $('gTitle').textContent='📈 The rule, drawn';
+  $('eq').textContent=`y = ${m}x ${b<0?'− '+Math.abs(b):'+ '+b}`;
+  const pad=8,xMin=-1,xMax=6,yMin=-10,yMax=26;
+  const X=x=>pad+(x-xMin)/(xMax-xMin)*(W-2*pad), Y=y=>H-pad-(y-yMin)/(yMax-yMin)*(H-2*pad);
+  ctx.lineWidth=1;ctx.strokeStyle='rgba(255,255,255,.06)';
+  for(let x=xMin;x<=xMax;x++){ctx.beginPath();ctx.moveTo(X(x),Y(yMin));ctx.lineTo(X(x),Y(yMax));ctx.stroke();}
+  for(let y=yMin;y<=yMax;y+=4){ctx.beginPath();ctx.moveTo(X(xMin),Y(y));ctx.lineTo(X(xMax),Y(y));ctx.stroke();}
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.beginPath();ctx.moveTo(X(0),Y(yMin));ctx.lineTo(X(0),Y(yMax));ctx.moveTo(X(xMin),Y(0));ctx.lineTo(X(xMax),Y(0));ctx.stroke();
+  const g=ctx.createLinearGradient(0,0,W,0);g.addColorStop(0,'#00f0ff');g.addColorStop(1,'#ff007f');
+  ctx.strokeStyle=g;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(xMin),Y(m*xMin+b));ctx.lineTo(X(xMax),Y(m*xMax+b));ctx.stroke();
+  for(let x=0;x<=4;x++){const y=m*x+b;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(X(x),Y(y),4.5,0,7);ctx.fill();}
+  setTip(`Drag the sliders — watch how "add ${m} each time" reshapes the line.`);
+  let rows='<div class="h"><span>x (step)</span><span>y (value)</span></div>';
+  for(let x=0;x<=4;x++)rows+=`<div><span>${x}</span><span>${m*x+b}</span></div>`;setTbl(rows);
+}
+
+/* --- bar chart: multiplication as repeated addition --- */
+function drawBars(W,H){
+  const per=+$('per').value, groups=+$('grp').value;
+  $('perVal').textContent=per;$('grpVal').textContent=groups;
+  $('gTitle').textContent='📊 Repeated addition';
+  $('eq').textContent=`${groups} × ${per} = ${groups*per}`;
+  const pad=28,base=H-22,maxV=Math.max(per*groups,8);
+  ctx.strokeStyle='rgba(255,255,255,.06)';ctx.fillStyle='rgba(160,160,176,.7)';ctx.font='10px Inter';ctx.textAlign='left';
+  for(let i=0;i<=4;i++){const v=Math.round(maxV*i/4),y=base-(v/maxV)*(base-12);ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(W-8,y);ctx.stroke();ctx.fillText(v,2,y+3);}
+  const bw=(W-pad-12)/groups;
+  for(let i=1;i<=groups;i++){const total=per*i,h=(total/maxV)*(base-12),x=pad+(i-1)*bw+bw/2,bWidth=Math.min(bw*0.5,34);
+    const g=ctx.createLinearGradient(0,base-h,0,base);g.addColorStop(0,'#00f0ff');g.addColorStop(1,'#8a2be2');
+    ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(x-bWidth/2,base-h,bWidth,Math.max(h,2),6);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='600 10px Inter';ctx.textAlign='center';ctx.fillText(total,x,base-h-5);
+    ctx.fillStyle='rgba(160,160,176,.9)';ctx.font='10px Inter';ctx.fillText(i,x,base+15);ctx.textAlign='left';}
+  setTip(`Each spider adds another ${per} legs — that's what "× ${groups}" really means.`);
+  let rows='<div class="h"><span>spiders</span><span>legs total</span></div>';
+  for(let i=1;i<=groups;i++)rows+=`<div><span>${i}</span><span>${per*i}</span></div>`;setTbl(rows);
+}
+
+/* --- geometry: area & perimeter of a rectangle --- */
+function drawGeo(W,H){
+  const w=+$('gw').value, h=+$('gh').value;
+  $('gwVal').textContent=w;$('ghVal').textContent=h;
+  $('gTitle').textContent='📐 Area of a rectangle';
+  $('eq').textContent=`Area = ${w} × ${h} = ${w*h}`;
+  const pad=18,cell=Math.min((W-2*pad)/10,(H-2*pad)/8),oX=pad,oY=H-pad;
+  ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=1;
+  for(let gx=0;gx<=10;gx++){ctx.beginPath();ctx.moveTo(oX+gx*cell,oY);ctx.lineTo(oX+gx*cell,oY-8*cell);ctx.stroke();}
+  for(let gy=0;gy<=8;gy++){ctx.beginPath();ctx.moveTo(oX,oY-gy*cell);ctx.lineTo(oX+10*cell,oY-gy*cell);ctx.stroke();}
+  const g=ctx.createLinearGradient(oX,0,oX+w*cell,0);g.addColorStop(0,'rgba(0,240,255,.35)');g.addColorStop(1,'rgba(255,0,127,.35)');
+  ctx.fillStyle=g;ctx.fillRect(oX,oY-h*cell,w*cell,h*cell);
+  ctx.strokeStyle='#00f0ff';ctx.lineWidth=2.5;ctx.strokeRect(oX,oY-h*cell,w*cell,h*cell);
+  ctx.fillStyle='#fff';ctx.font='700 14px Outfit';ctx.textAlign='center';
+  ctx.fillText(`${w*h} sq`,oX+w*cell/2,oY-h*cell/2+5);ctx.textAlign='left';
+  setTip(`Area fills the inside (${w}×${h}); perimeter is the distance around the edge.`);
+  setTbl(`<div class="h"><span>measure</span><span>value</span></div>
+    <div><span>width</span><span>${w}</span></div><div><span>height</span><span>${h}</span></div>
+    <div><span>area</span><span>${w*h}</span></div><div><span>perimeter</span><span>${2*(w+h)}</span></div>`);
+}
+
+/* tab switching + slider wiring */
+$('conceptTabs').addEventListener('click',e=>{const btn=e.target.closest('.ctab');if(!btn)return;
+  mode=btn.dataset.mode;
+  [...$('conceptTabs').children].forEach(c=>c.classList.toggle('active',c===btn));
+  document.querySelectorAll('.cgroup').forEach(grp=>grp.hidden=(grp.dataset.g!==mode));
+  draw();});
+['m','b','per','grp','gw','gh'].forEach(id=>$(id).addEventListener('input',draw));
+window.addEventListener('resize',resize);
+
+/* ---------------- code terminal: run JS, capture console.log ---------------- */
+const runBtn=document.getElementById('runBtn'), editor=document.getElementById('editor'), out=document.getElementById('console');
+runBtn.onclick=()=>{
+  out.innerHTML='';const log=[];
+  const fake={log:(...a)=>log.push(a.map(String).join(' '))};
+  try{ new Function('console',editor.value)(fake);
+    if(!log.length)out.innerHTML='<span class="ln muted">▸ Ran with no output.</span>';
+    else log.forEach(l=>{const d=document.createElement('div');d.className='ln';d.textContent='› '+l;out.appendChild(d);});
+    const ok=document.createElement('div');ok.className='ln ok';ok.textContent='✓ Finished. Nice — does it match your prediction?';out.appendChild(ok);
+  }catch(e){const d=document.createElement('div');d.className='ln err';d.textContent='✗ '+e.message;out.appendChild(d);
+    const h=document.createElement('div');h.className='ln muted';h.textContent='Read the error — which line does it point to?';out.appendChild(h);}
+  out.scrollTop=out.scrollHeight;
+};
+
+/* ---------------- chat: modern bubbles + Socratic canned replies ---------------- */
+const messages=document.getElementById('messages'), input=document.getElementById('chatInput'), send=document.getElementById('sendBtn');
+const replies=[
+  "Good instinct! A loop is perfect here. What part of your rule should go <i>inside</i> the loop — the starting value, or the part that repeats?",
+  "No worries — being stuck is where the learning happens. 💪 Let's shrink it: can you make the computer print just the <b>first two</b> numbers?",
+  "Here's a nudge (not the answer 😉): a counter that does <code>value = value + 1</code> adds one each loop. Yours needs to add something different — what?",
+  "Try predicting first: if the rule is <code>add 3</code> starting at 2, what's the 4th number? Then let's check it with the graph on the left."
+];
+let r=0;
+function addMsg(html,who){const m=document.createElement('div');m.className='msg '+who;
+  m.innerHTML=(who==='tutor'?'<div class="mini">MØ</div>':'')+'<div class="b">'+html+'</div>';
+  messages.appendChild(m);messages.scrollTop=messages.scrollHeight;}
+function tutorReply(){const t=document.createElement('div');t.className='msg tutor typing';
+  t.innerHTML='<div class="mini">MØ</div><div class="b"><span></span><span></span><span></span></div>';
+  messages.appendChild(t);messages.scrollTop=messages.scrollHeight;
+  setTimeout(()=>{t.remove();addMsg(replies[r%replies.length],'tutor');r++;},1100);}
+function sendMsg(txt){if(!txt.trim())return;addMsg(txt.replace(/</g,'&lt;'),'me');input.value='';setTimeout(tutorReply,250);}
+send.onclick=()=>sendMsg(input.value);
+input.addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg(input.value);});
+document.getElementById('suggest').addEventListener('click',e=>{if(e.target.classList.contains('chip'))sendMsg(e.target.textContent);});
+
+resize();
+</script>
+</body>
+</html>

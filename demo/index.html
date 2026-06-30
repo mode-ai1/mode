@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MØDE | Math + Code Dashboard</title>
+    <meta name="description" content="MØDE: An AI-operated company with bounded autonomy teaching kids mathematics through code.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <nav class="navbar">
+        <div class="logo">MØDE <span class="tag">AI-OPERATED</span></div>
+        <ul class="nav-links">
+            <li><a href="#pedagogy">Pedagogy</a></li>
+            <li><a href="#architecture">AI Stack</a></li>
+            <li><a href="#safety">Safety & Privacy</a></li>
+            <li><a href="learner-dashboard.html">Live Demo</a></li>
+            <li><a href="mode-scholars.html">MØDE Scholars</a></li>
+        </ul>
+        <a href="onboarding.html" class="btn primary">Get Started</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Ignite the Language of the <span class="gradient-text">Universe</span></h1>
+            <p>Children learning mathematics through code, taught by a Socratic AI tutor, inside a company that largely runs itself.</p>
+            <div class="action-group">
+                <a href="#pedagogy" class="btn primary glow">Explore Evidence</a>
+                <a href="MØDE_Business_Documentation.md" class="btn secondary">Read Documentation</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="glass-panel">
+                <img src="assets/mode_hero.png" alt="MØDE Hero Graphic" class="floating-img">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- New Section: Market & Equity -->
+        <section id="market" class="glass-card mb-xl">
+            <div class="section-header">
+                <h2>The Market & Equity</h2>
+                <div class="badge alert">PISA 2022 Alert</div>
+            </div>
+            <p class="section-desc">PISA 2022 recorded an unprecedented ~15-point OECD drop in mathematics attainment. MØDE directly targets this decline by providing cheap, one-to-one Socratic tutoring for the children losing the most ground.</p>
+            <div class="metrics-dashboard mt-l">
+                <div class="metric-block">
+                    <h3>OECD PISA Decline</h3>
+                    <div class="number text-warning">-15 pts</div>
+                    <p>Equivalent to ~¾ of a year of learning</p>
+                </div>
+                <div class="metric-block">
+                    <h3>The Solution</h3>
+                    <div class="number gradient-text">1:1</div>
+                    <p>Socratic AI Tutoring Software Scale</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pedagogy Section -->
+        <section id="pedagogy" class="glass-card mb-xl">
+            <div class="section-header">
+                <h2>Evidence-Backed Pedagogy</h2>
+                <div class="badge success">Proven Transfer (g ≈ 0.49)</div>
+            </div>
+            <p class="section-desc">MØDE's central premise—code as a medium for learning maths—has strong meta-analytic support. Programming produces a moderate overall transfer to mathematical skill, strongest when the target skill is close to the code.</p>
+            
+            <div class="grid-2 mt-l">
+                <div class="feature-card">
+                    <div class="icon">📈</div>
+                    <h3>Socratic Escalation</h3>
+                    <p>A Socratic AI tutor beats group instruction (g ≈ 0.42), but novices need scaffolding. MØDE escalates support: <strong>Question → Hint → Partial Example → Direct Explanation</strong> to prevent working-memory overload.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🧩</div>
+                    <h3>Age-Tiered Curriculum</h3>
+                    <p><strong>Ages 5-7:</strong> Block-based logic & spatial reasoning.<br>
+                    <strong>Ages 8-12:</strong> Variables (algebra) & Coordinates (geometry) via game dev.<br>
+                    <strong>Ages 13-15:</strong> Advanced AI dev & data analysis.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Stack Section -->
+        <section id="architecture" class="glass-card mb-xl">
+            <div class="section-header">
+                <h2>The AI / Agent Stack</h2>
+                <div class="badge">4 Real Layers</div>
+            </div>
+            <p class="section-desc">MØDE is built on real, interoperable, and documented technology. It is not just "an AI" — it is a precise orchestration of four layers.</p>
+            <div class="stack-diagram mt-l">
+                <div class="stack-layer">
+                    <div class="layer-title">Orchestrator</div>
+                    <div class="layer-content"><strong>Hermes Agent</strong>: Runtime with persistent cross-session memory + autonomous skill loop.</div>
+                </div>
+                <div class="stack-layer">
+                    <div class="layer-title">Reasoning Brain</div>
+                    <div class="layer-content"><strong>NVIDIA Nemotron 3 Ultra</strong>: Routed by difficulty, with reasoning-budget control.</div>
+                </div>
+                <div class="stack-layer">
+                    <div class="layer-title">Safety Cage</div>
+                    <div class="layer-content"><strong>NVIDIA NemoClaw</strong>: OpenShell sandbox, declarative egress policy, providing the mechanism for MØDE-authored safety policies.</div>
+                </div>
+                <div class="stack-layer">
+                    <div class="layer-title">Wallet</div>
+                    <div class="layer-content"><strong>Stripe Agent Toolkit</strong>: Scoped, spend-capped, delegated agent identities to pay for services.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Autonomy Section -->
+        <section id="autonomy" class="glass-card mb-xl">
+            <div class="section-header">
+                <h2>Bounded Business Autonomy</h2>
+                <div class="badge alert">Humans on the Loop</div>
+            </div>
+            <div class="grid-2 mt-l">
+                <div>
+                    <h3 class="mb-s">Structurally Low Marginal Cost</h3>
+                    <p>Rather than claiming "$0 overhead", MØDE leverages cost levers like serverless hibernation, model right-sizing, and reasoning-budget caps to achieve <strong>structurally low marginal cost and minimal fixed overhead</strong>.</p>
+                </div>
+                <div>
+                    <h3 class="mb-s">Bounded Operations</h3>
+                    <p>Learning from Anthropic's Project Vend, MØDE utilizes <strong>bounded autonomy</strong>: short, checkpointed, recoverable steps run within hard limits (scoped Stripe keys, spend caps, NemoClaw egress rules), with humans owning judgement calls.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety & Privacy Section -->
+        <section id="safety" class="glass-card mb-xl">
+            <div class="section-header">
+                <h2>Child Safety & Privacy</h2>
+                <div class="badge danger">The Gating Constraint</div>
+            </div>
+            <p class="section-desc">A product for 5–15-year-olds triggers the strictest tier of privacy law in every major market. NemoClaw provides the mechanism, but MØDE authors and tests the child-safety policies.</p>
+            
+            <div class="grid-3 mt-l">
+                <div class="feature-card compliance">
+                    <div class="icon">🇺🇸</div>
+                    <h3>COPPA (US)</h3>
+                    <p>Verifiable parental consent, separate consent for third-party disclosure, and data-minimisation.</p>
+                </div>
+                <div class="feature-card compliance">
+                    <div class="icon">🇬🇧</div>
+                    <h3>Children's Code (UK)</h3>
+                    <p>High privacy by default, profiling off, and no nudge techniques (careful gamification).</p>
+                </div>
+                <div class="feature-card compliance">
+                    <div class="icon">🇪🇺</div>
+                    <h3>GDPR & POPIA</h3>
+                    <p>Strict design tension resolved: store <strong>pedagogical state</strong> (mastery, ZPD position) rather than raw session transcripts.</p>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer>
+        <p>Built for the Hermes Agent Accelerated Business Hackathon by The Dev Glacier @ Active Ice Digital.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

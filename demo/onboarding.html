@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MØDE | Set up your child's account — Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#0a0a0f;--bg-panel:rgba(20,20,30,.6);--bg-solid:#14141e;
+  --primary:#00f0ff;--secondary:#ff007f;--accent:#8a2be2;
+  --text-main:#fff;--text-muted:#a0a0b0;--glass-border:rgba(255,255,255,.1);
+  --ok:#39d98a;--warn:#ffb020;--err:#ff5470;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:var(--bg-dark);color:var(--text-main);font-family:'Inter',sans-serif;
+  display:flex;flex-direction:column;align-items:center;padding:0 0 40px;
+  background-image:radial-gradient(circle at 15% 0%,rgba(138,43,226,.18),transparent 45%),
+                   radial-gradient(circle at 85% 100%,rgba(0,240,255,.12),transparent 45%);}
+.gnav{display:flex;align-items:center;gap:22px;width:100%;height:52px;padding:0 22px;
+  background:rgba(8,8,13,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:50}
+.gn-logo{font-family:'Outfit';font-weight:900;font-size:18px;color:#fff;text-decoration:none}
+.gn-logo span{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.gn-links{display:flex;gap:4px}
+.gn-links a{font-size:13px;color:var(--text-muted);text-decoration:none;padding:6px 11px;border-radius:8px}
+.gn-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+@media(max-width:760px){.gn-links{display:none}}
+.wire-badge{position:fixed;top:10px;right:14px;font-size:11px;letter-spacing:.12em;color:var(--text-muted);
+  border:1px solid var(--glass-border);padding:3px 10px;border-radius:99px;background:var(--bg-panel)}
+.shell{width:100%;max-width:640px;margin-top:30px;padding:0 18px}
+.brand{text-align:center;margin-bottom:22px}
+.logo{font-family:'Outfit';font-weight:900;font-size:30px}
+.logo .o{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand p{color:var(--text-muted);font-size:13px;margin-top:4px}
+
+/* stepper */
+.stepper{display:flex;align-items:center;gap:6px;margin-bottom:22px}
+.stepper .s{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.stepper .s>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .35s}
+.stepper .s.done>i,.stepper .s.cur>i{width:100%}
+.stepper .s.cur>i{width:55%}
+
+/* card */
+.card{background:var(--bg-panel);border:1px solid var(--glass-border);border-radius:var(--radius);
+  backdrop-filter:blur(10px);padding:30px}
+.step{display:none}.step.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+h2{font-family:'Outfit';font-size:23px;font-weight:800;margin-bottom:8px;line-height:1.2}
+.lede{color:var(--text-muted);font-size:14px;line-height:1.6;margin-bottom:22px}
+
+/* fields */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px}
+.field input,.field select{width:100%;background:var(--bg-solid);border:1px solid var(--glass-border);border-radius:10px;
+  padding:12px 14px;color:#fff;font-size:14px;outline:none;font-family:inherit}
+.field input:focus,.field select:focus{border-color:var(--primary)}
+.row{display:flex;gap:12px}.row>*{flex:1}
+
+/* checks */
+.check{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border:1px solid var(--glass-border);
+  border-radius:11px;margin-bottom:10px;cursor:pointer;background:rgba(255,255,255,.02)}
+.check:hover{border-color:rgba(0,240,255,.3)}
+.check input{margin-top:2px;width:18px;height:18px;accent-color:var(--primary);flex:none}
+.check .ct{font-size:13px;line-height:1.5}.check .ct b{font-weight:600}
+.check .ct small{display:block;color:var(--text-muted);font-size:11.5px;margin-top:2px}
+
+/* consent method */
+.method{display:flex;align-items:center;gap:14px;padding:16px;border-radius:12px;margin-bottom:14px;
+  border:1px solid var(--glass-border);background:linear-gradient(135deg,rgba(138,43,226,.14),rgba(0,240,255,.08))}
+.method .ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:20px;background:rgba(255,255,255,.06);flex:none}
+.method .mt b{font-size:14px}.method .mt small{display:block;color:var(--text-muted);font-size:12px;margin-top:2px}
+.method .stripe{margin-left:auto;font-size:10px;color:var(--text-muted);border:1px solid var(--glass-border);padding:3px 8px;border-radius:6px;white-space:nowrap}
+
+/* avatars */
+.avatars{display:flex;gap:10px;flex-wrap:wrap}
+.av{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;cursor:pointer;
+  border:2px solid transparent;background:rgba(255,255,255,.04)}
+.av.sel{border-color:var(--primary);background:rgba(0,240,255,.12)}
+.tier-hint{margin-top:10px;font-size:12px;color:var(--text-muted)}
+.tier-hint b{color:var(--primary)}
+
+/* toggles */
+.toggle{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.toggle:last-child{border:none}
+.toggle .tx{flex:1}.toggle .tx .t{font-size:13.5px;font-weight:500}.toggle .tx .d{font-size:11.5px;color:var(--text-muted);margin-top:2px}
+.sw{width:42px;height:24px;border-radius:99px;background:rgba(255,255,255,.12);position:relative;flex:none;cursor:pointer;transition:.2s}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:linear-gradient(135deg,var(--primary),var(--accent))}.sw.on:after{left:21px}
+.locked{opacity:.6;pointer-events:none}
+.pill{display:inline-block;font-size:10px;color:var(--ok);border:1px solid rgba(57,217,138,.4);background:rgba(57,217,138,.1);padding:2px 8px;border-radius:99px;margin-left:6px}
+
+/* gate note */
+.note{display:flex;gap:10px;font-size:12px;color:var(--text-muted);background:rgba(255,255,255,.03);
+  border:1px solid var(--glass-border);border-radius:10px;padding:12px 14px;margin-bottom:20px;line-height:1.5}
+.note.warn{background:rgba(255,176,32,.08);border-color:rgba(255,176,32,.3);color:#ffd58a}
+
+/* summary */
+.sum{border:1px solid var(--glass-border);border-radius:12px;overflow:hidden;margin-bottom:8px}
+.sum .r{display:flex;justify-content:space-between;padding:11px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.05)}
+.sum .r:last-child{border:none}.sum .r span{color:var(--text-muted)}.sum .r b{font-weight:500}
+.success-ico{width:64px;height:64px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;font-size:30px;
+  background:linear-gradient(135deg,var(--ok),var(--primary));color:#04130c}
+
+/* nav */
+.nav{display:flex;align-items:center;gap:12px;margin-top:24px}
+.btn{border:none;cursor:pointer;font-weight:600;font-size:14px;padding:13px 24px;border-radius:11px;font-family:inherit}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#06060a;flex:1}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:rgba(255,255,255,.06);color:var(--text-muted)}
+.legal{text-align:center;font-size:11px;color:var(--text-muted);margin-top:16px;line-height:1.6}
+.legal a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<nav class="gnav">
+  <a class="gn-logo" href="index.html">M<span>Ø</span>DE</a>
+  <div class="gn-links">
+    <a href="index.html">← Back to home</a>
+  </div>
+  <span style="margin-left:auto;font-size:11px;color:var(--text-muted)">🔒 Account setup &amp; consent must be completed first</span>
+</nav>
+<div class="wire-badge">WIREFRAME · ONBOARDING & CONSENT</div>
+
+<div class="shell">
+  <div class="brand">
+    <div class="logo">M<span class="o">Ø</span>DE</div>
+    <p>Setting up a safe learning space for your child</p>
+  </div>
+
+  <div class="stepper" id="stepper">
+    <div class="s"><i></i></div><div class="s"><i></i></div><div class="s"><i></i></div>
+    <div class="s"><i></i></div><div class="s"><i></i></div><div class="s"><i></i></div>
+  </div>
+
+  <div class="card">
+
+    <!-- STEP 1 — Parent account (adult space) -->
+    <section class="step active" data-step="0">
+      <div class="eyebrow">Step 1 of 6 · For grown-ups</div>
+      <h2>Create your parent account</h2>
+      <p class="lede">MØDE is set up by a parent or legal guardian. Your child never creates their own account — you stay in control of everything from here.</p>
+      <div class="field"><label>Your name</label><input id="pName" placeholder="e.g. Jensen Huang"></div>
+      <div class="field"><label>Email address</label><input id="pEmail" type="email" placeholder="you@email.com"></div>
+      <div class="field"><label>Create a password</label><input type="password" placeholder="••••••••"></div>
+      <label class="check"><input type="checkbox" class="req"><span class="ct"><b>I am the parent or legal guardian</b> of the child I'm enrolling, and I'm over 18.</span></label>
+    </section>
+
+    <!-- STEP 2 — Verifiable parental consent (COPPA) -->
+    <section class="step" data-step="1">
+      <div class="eyebrow">Step 2 of 6 · Required by law</div>
+      <h2>Verify you're the parent</h2>
+      <p class="lede">Because MØDE is for children, we're legally required (COPPA) to confirm you're a verified adult before any child data is collected. We use a small payment-card check via Stripe — a recognised verifiable-consent method.</p>
+      <div class="method">
+        <div class="ic">🔒</div>
+        <div class="mt"><b>Verify with payment card</b><small>A temporary $0 authorisation — no charge to start. Powered by Stripe.</small></div>
+        <span class="stripe">Stripe</span>
+      </div>
+      <div class="note warn">⚠️ This is a wireframe — no real verification or charge occurs. In production this is where Stripe's verifiable parental-consent check runs.</div>
+      <label class="check"><input type="checkbox" class="req"><span class="ct"><b>I consent to MØDE collecting my child's learning data</b><small>Used only to personalise tutoring and show you progress — see the consent details next.</small></span></label>
+    </section>
+
+    <!-- STEP 3 — Granular consent details -->
+    <section class="step" data-step="2">
+      <div class="eyebrow">Step 3 of 6 · What you're agreeing to</div>
+      <h2>Your consent, in plain language</h2>
+      <p class="lede">We collect the minimum needed to teach well. You can change or withdraw any of these anytime from the parent dashboard.</p>
+      <label class="check"><input type="checkbox" class="req" checked><span class="ct"><b>Learning &amp; progress data</b> <small>Mastery level and where your child is in the curriculum — not raw chat transcripts.</small></span></label>
+      <label class="check"><input type="checkbox" class="req" checked><span class="ct"><b>A first name or nickname &amp; age</b> <small>Age sets the right difficulty tier. No surname, address, or photo required.</small></span></label>
+      <label class="check"><input type="checkbox"><span class="ct"><b>Optional: occasional product emails to me</b> <small>Tips and new features — to your email, never your child's. Off is fine.</small></span></label>
+      <label class="check"><input type="checkbox"><span class="ct"><b>Optional: share anonymised data to improve MØDE</b> <small>Separate, explicit consent for any third-party use. Off by default.</small></span></label>
+      <div class="legal">By continuing you agree to the <a>Privacy Policy</a> and <a>Children's Data Notice</a> (COPPA · UK Children's Code · GDPR · POPIA).</div>
+    </section>
+
+    <!-- STEP 4 — Add child (data minimization) -->
+    <section class="step" data-step="3">
+      <div class="eyebrow">Step 4 of 6 · Your child</div>
+      <h2>Add your child</h2>
+      <p class="lede">Just enough to get started — a name they'll recognise and their age. That's it.</p>
+      <div class="row">
+        <div class="field"><label>First name or nickname</label><input id="cName" placeholder="e.g. Abel"></div>
+        <div class="field"><label>Age</label>
+          <select id="cAge"><option value="">Select…</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+            <option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+          </select></div>
+      </div>
+      <div class="field"><label>Pick an avatar</label>
+        <div class="avatars" id="avatars">
+          <div class="av sel">🦊</div><div class="av">🐼</div><div class="av">🚀</div>
+          <div class="av">🦉</div><div class="av">🐙</div><div class="av">🤖</div><div class="av">🦄</div>
+        </div>
+      </div>
+      <div class="tier-hint" id="tierHint">Age sets the learning tier: <b>5–7 Explorer</b> · <b>8–12 Builder</b> · <b>13–15 Engineer</b>.</div>
+    </section>
+
+    <!-- STEP 5 — Privacy & safety defaults (high privacy by default) -->
+    <section class="step" data-step="4">
+      <div class="eyebrow">Step 5 of 6 · Safety defaults</div>
+      <h2>Privacy &amp; safety, set high by default</h2>
+      <p class="lede">These start in the safest setting. You can fine-tune them anytime in the dashboard.</p>
+      <div class="toggle locked"><div class="tx"><div class="t">Store mastery, not transcripts <span class="pill">Always on</span></div><div class="d">Data-minimisation — we keep learning state, not raw conversations.</div></div><div class="sw on"></div></div>
+      <div class="toggle locked"><div class="tx"><div class="t">Profiling &amp; ad-targeting off <span class="pill">Always on</span></div><div class="d">No behavioural profiling (UK Children's Code).</div></div><div class="sw on"></div></div>
+      <div class="toggle"><div class="tx"><div class="t">Daily time limit (45 min)</div><div class="d">Sessions pause and notify you at the cap.</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle"><div class="tx"><div class="t">Approve new modules before they unlock</div><div class="d">MØDE asks your OK before opening a new topic.</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle"><div class="tx"><div class="t">Weekly progress email to me</div><div class="d">Tutor summary delivered to your inbox.</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+    </section>
+
+    <!-- STEP 6 — Confirmation -->
+    <section class="step" data-step="5">
+      <div class="success-ico">✓</div>
+      <h2 style="text-align:center">You're all set!</h2>
+      <p class="lede" style="text-align:center">Everything's ready for <b id="sumName">Sam</b>'s first session. You're always in control — visit the dashboard anytime.</p>
+      <div class="sum">
+        <div class="r"><span>Child</span><b id="sumChild">Sam · age 8</b></div>
+        <div class="r"><span>Learning tier</span><b id="sumTier">Builder (8–12)</b></div>
+        <div class="r"><span>Starting module</span><b>Number Sense &amp; Arithmetic</b></div>
+        <div class="r"><span>Parental consent</span><b style="color:var(--ok)">✓ Verified</b></div>
+        <div class="r"><span>Privacy</span><b>High — mastery only, no profiling</b></div>
+      </div>
+    </section>
+
+    <!-- NAV -->
+    <div class="nav">
+      <button class="btn ghost" id="backBtn" style="display:none">Back</button>
+      <button class="btn primary" id="nextBtn">Continue</button>
+    </div>
+  </div>
+
+  <p class="legal" style="margin-top:18px">🔒 Your child's safety is the whole point. We collect the minimum, never sell data, and you can export or delete it anytime.</p>
+</div>
+
+<script>
+const steps=[...document.querySelectorAll('.step')], segs=[...document.querySelectorAll('.stepper .s')];
+const nextBtn=document.getElementById('nextBtn'), backBtn=document.getElementById('backBtn');
+let i=0;
+
+function render(){
+  steps.forEach((s,n)=>s.classList.toggle('active',n===i));
+  segs.forEach((s,n)=>{s.classList.toggle('done',n<i);s.classList.toggle('cur',n===i);});
+  backBtn.style.display=i===0?'none':'inline-block';
+  if(i===steps.length-1){nextBtn.textContent="🚀 Enter your dashboard";}
+  else if(i===steps.length-2){nextBtn.textContent="Finish setup";}
+  else{nextBtn.textContent="Continue";}
+  validate();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function validate(){
+  // required checkboxes on the current step must be checked
+  const reqs=[...steps[i].querySelectorAll('input.req')];
+  const ok=reqs.every(c=>c.checked);
+  nextBtn.disabled=!ok;
+}
+// re-validate when any required box toggles
+document.addEventListener('change',e=>{if(e.target.matches('input.req'))validate();});
+
+nextBtn.onclick=()=>{
+  if(nextBtn.disabled)return;
+  if(i===steps.length-1){ // final CTA → into the learner dashboard
+    window.location.href='parent-dashboard.html';return;
+  }
+  i++;render();
+};
+backBtn.onclick=()=>{if(i>0){i--;render();}};
+
+// avatar pick
+document.getElementById('avatars').addEventListener('click',e=>{
+  if(!e.target.classList.contains('av'))return;
+  document.querySelectorAll('.av').forEach(a=>a.classList.remove('sel'));
+  e.target.classList.add('sel');
+});
+
+// child name/age feed the tier hint + summary
+const cName=document.getElementById('cName'), cAge=document.getElementById('cAge');
+function tierFor(a){a=+a;if(!a)return'';if(a<=7)return'Explorer (5–7)';if(a<=12)return'Builder (8–12)';return'Engineer (13–15)';}
+function syncChild(){
+  const name=cName.value.trim()||'Sam', age=cAge.value||'8';
+  document.getElementById('tierHint').innerHTML = cAge.value
+    ? `<b>${name}</b> will start in the <b>${tierFor(age)}</b> tier.`
+    : 'Age sets the learning tier: <b>5–7 Explorer</b> · <b>8–12 Builder</b> · <b>13–15 Engineer</b>.';
+  document.getElementById('sumName').textContent=name;
+  document.getElementById('sumChild').textContent=`${name} · age ${age}`;
+  document.getElementById('sumTier').textContent=tierFor(age);
+}
+cName.addEventListener('input',syncChild);cAge.addEventListener('change',syncChild);
+
+render();
+</script>
+</body>
+</html>

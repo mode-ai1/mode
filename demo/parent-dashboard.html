@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MØDE | Parent Dashboard — Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#0a0a0f;--bg-panel:rgba(20,20,30,.6);--bg-solid:#14141e;
+  --primary:#00f0ff;--secondary:#ff007f;--accent:#8a2be2;
+  --text-main:#fff;--text-muted:#a0a0b0;--glass-border:rgba(255,255,255,.1);
+  --ok:#39d98a;--warn:#ffb020;--err:#ff5470;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg-dark);color:var(--text-main);font-family:'Inter',sans-serif;min-height:100vh;
+  background-image:radial-gradient(circle at 12% 0%,rgba(138,43,226,.16),transparent 42%),
+                   radial-gradient(circle at 90% 100%,rgba(0,240,255,.1),transparent 45%);}
+.wire-badge{position:fixed;bottom:10px;left:14px;z-index:50;font-size:11px;letter-spacing:.12em;color:var(--text-muted);
+  border:1px solid var(--glass-border);padding:3px 10px;border-radius:99px;background:var(--bg-panel)}
+a{color:inherit}
+
+/* top bar */
+.topbar{height:60px;display:flex;align-items:center;gap:20px;padding:0 26px;border-bottom:1px solid var(--glass-border);
+  background:rgba(10,10,15,.7);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20}
+.logo{font-family:'Outfit';font-weight:900;font-size:22px}
+.logo .o{background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo .tag{font-family:'Inter';font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--text-muted);border:1px solid var(--glass-border);padding:2px 7px;border-radius:6px;margin-left:8px;vertical-align:middle}
+.topnav{display:flex;gap:22px;font-size:13px;color:var(--text-muted);margin-left:10px}
+.topnav a.active{color:#fff;font-weight:600}
+.spacer{flex:1}
+.parent{display:flex;align-items:center;gap:10px;font-size:13px}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary));display:grid;place-items:center;font-weight:700;font-size:13px}
+
+/* page header */
+.page{max-width:1240px;margin:0 auto;padding:24px 26px 60px}
+.head{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.head h1{font-family:'Outfit';font-size:24px;font-weight:900}
+.kid-tabs{display:flex;gap:8px}
+.kid{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;border:1px solid var(--glass-border);
+  background:var(--bg-panel);font-size:13px;color:var(--text-muted);cursor:pointer}
+.kid.active{color:#fff;border-color:transparent;background:linear-gradient(135deg,rgba(0,240,255,.18),rgba(138,43,226,.18))}
+.kid .pic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;background:linear-gradient(135deg,var(--secondary),var(--accent))}
+.kid.add{color:var(--primary)}
+.range{margin-left:auto;display:flex;gap:4px;background:var(--bg-panel);border:1px solid var(--glass-border);border-radius:99px;padding:4px}
+.range button{border:none;background:none;color:var(--text-muted);font-size:12px;padding:5px 12px;border-radius:99px;cursor:pointer}
+.range button.on{background:rgba(255,255,255,.1);color:#fff}
+
+/* grid + cards */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--bg-panel);border:1px solid var(--glass-border);border-radius:var(--radius);backdrop-filter:blur(8px);padding:18px}
+.card h3{font-family:'Outfit';font-size:14px;font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.card .sub{font-size:11px;color:var(--text-muted);margin-bottom:14px}
+.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+
+/* KPI */
+.kpi .top{display:flex;justify-content:space-between;align-items:flex-start}
+.kpi .ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px;background:rgba(255,255,255,.05)}
+.kpi .num{font-family:'Outfit';font-size:30px;font-weight:900;margin-top:14px;line-height:1}
+.kpi .lbl{font-size:12px;color:var(--text-muted);margin-top:6px}
+.kpi .delta{font-size:11px;font-weight:600}
+.up{color:var(--ok)}.down{color:var(--err)}
+
+/* chart */
+.chart-wrap{height:200px;position:relative}
+canvas{display:block;width:100%;height:100%}
+
+/* tutor summary */
+.summary{font-size:13.5px;line-height:1.65;color:#d7dbe6}
+.summary b{color:#fff}
+.summary .by{display:flex;align-items:center;gap:9px;margin-top:14px;font-size:11px;color:var(--text-muted)}
+.summary .mø{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#06060a}
+.flag{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12.5px;background:rgba(255,176,32,.1);border:1px solid rgba(255,176,32,.3);color:#ffd58a}
+
+/* mastery list */
+.mastery{display:flex;flex-direction:column;gap:14px}
+.m-row .m-top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.m-row .m-top .st{font-size:11px;padding:2px 8px;border-radius:99px}
+.st.secure{background:rgba(57,217,138,.15);color:var(--ok)}
+.st.emerging{background:rgba(255,176,32,.15);color:var(--warn)}
+.st.locked{background:rgba(255,255,255,.06);color:var(--text-muted)}
+.track{height:8px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.track>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--accent))}
+
+/* badges */
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.badge{text-align:center;padding:12px 6px;border-radius:12px;border:1px solid var(--glass-border);background:rgba(255,255,255,.02)}
+.badge .b{font-size:26px}.badge .n{font-size:11px;margin-top:6px;color:var(--text-muted)}
+.badge.locked{opacity:.35;filter:grayscale(1)}
+
+/* activity feed */
+.feed{display:flex;flex-direction:column;gap:2px}
+.ev{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.ev:last-child{border:none}
+.ev .ic{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-size:14px;background:rgba(255,255,255,.05)}
+.ev .t{font-size:11px;color:var(--text-muted);margin-left:auto;white-space:nowrap}
+
+/* billing */
+.plan{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(138,43,226,.18),rgba(0,240,255,.12));border:1px solid var(--glass-border);margin-bottom:14px}
+.plan .name{font-family:'Outfit';font-weight:700}.plan .price{font-size:12px;color:var(--text-muted)}
+.plan .stripe{font-size:10px;color:var(--text-muted);border:1px solid var(--glass-border);padding:3px 8px;border-radius:6px}
+.receipts{font-size:12.5px}
+.receipts .r{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-muted)}
+.receipts .r b{color:#fff;font-weight:500}
+.auto-note{font-size:11px;color:var(--text-muted);margin-top:12px;display:flex;gap:6px;align-items:flex-start}
+.auto-note:before{content:"⚙️"}
+
+/* safety toggles */
+.toggle{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.toggle:last-child{border:none}
+.toggle .txt{flex:1}.toggle .txt .t{font-size:13px;font-weight:500}.toggle .txt .d{font-size:11px;color:var(--text-muted);margin-top:2px}
+.sw{width:42px;height:24px;border-radius:99px;background:rgba(255,255,255,.12);position:relative;flex:none;cursor:pointer;transition:.2s}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:linear-gradient(135deg,var(--primary),var(--accent))}.sw.on:after{left:21px}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:9px}
+@media(max-width:900px){.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12}}
+/* shared nav */
+.gn-links{display:flex;gap:4px;align-items:center}
+.gn-links a{font-family:'Inter',sans-serif;font-size:13px;color:#a0a0b0;text-decoration:none;padding:6px 11px;border-radius:8px}
+.gn-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.gn-links a.on{color:#fff;background:linear-gradient(135deg,rgba(0,240,255,.18),rgba(138,43,226,.18))}
+a.logo{text-decoration:none;color:inherit}
+@media(max-width:820px){.gn-links{display:none}}
+.view-switch{display:inline-flex;background:rgba(255,255,255,.06);border:1px solid var(--glass-border);border-radius:99px;padding:3px}
+.view-switch a{font-size:12px;color:var(--text-muted);text-decoration:none;padding:5px 12px;border-radius:99px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.view-switch a.on{color:#fff;background:linear-gradient(135deg,rgba(0,240,255,.25),rgba(138,43,226,.25))}
+</style>
+</head>
+<body>
+<div class="wire-badge">WIREFRAME · PARENT DASHBOARD</div>
+
+<header class="topbar">
+  <a class="logo" href="index.html">M<span class="o">Ø</span>DE<span class="tag">PARENT</span></a>
+  <nav class="gn-links">
+    <a href="index.html">Home</a>
+    <a href="learner-dashboard.html">Learner</a>
+    <a href="lesson-view.html">Lesson</a>
+    <a href="parent-dashboard.html" class="on">Parent</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="view-switch">
+    <a href="learner-dashboard.html">🧒 Child</a>
+    <a href="parent-dashboard.html" class="on">👤 Parent</a>
+  </div>
+  <div class="parent"><span>David R.</span><div class="avatar">DR</div></div>
+</header>
+
+<div class="page">
+  <!-- header -->
+  <div class="head">
+    <h1>Samantha's Progress</h1>
+    <div class="kid-tabs">
+      <div class="kid active"><span class="pic">SA</span> Samantha · 8</div>
+      <div class="kid"><span class="pic">LI</span> Liam · 11</div>
+      <div class="kid add">＋ Add child</div>
+    </div>
+    <div class="range">
+      <button>Day</button><button class="on">Week</button><button>Month</button><button>All</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- KPI row -->
+    <div class="card col-3 kpi">
+      <div class="top"><div class="ico">⏱️</div><div class="delta up">▲ 18%</div></div>
+      <div class="num">2h 45m</div><div class="lbl">Learning time this week</div>
+    </div>
+    <div class="card col-3 kpi">
+      <div class="top"><div class="ico">📘</div><div class="delta up">▲ 4</div></div>
+      <div class="num">12</div><div class="lbl">Lessons completed</div>
+    </div>
+    <div class="card col-3 kpi">
+      <div class="top"><div class="ico">🔥</div><div class="delta up">best yet</div></div>
+      <div class="num">4 days</div><div class="lbl">Current streak</div>
+    </div>
+    <div class="card col-3 kpi">
+      <div class="top"><div class="ico">🎯</div><div class="delta up">▲ 6%</div></div>
+      <div class="num">68%</div><div class="lbl">Overall mastery</div>
+    </div>
+
+    <!-- weekly activity chart -->
+    <div class="card col-8">
+      <h3>📊 Weekly activity</h3>
+      <div class="sub">Minutes spent learning · Mon–Sun</div>
+      <div class="chart-wrap"><canvas id="activity"></canvas></div>
+    </div>
+
+    <!-- tutor auto-summary -->
+    <div class="card col-4">
+      <h3>🧠 Tutor summary</h3>
+      <div class="sub">Auto-generated after each session</div>
+      <div class="summary">
+        Samantha is <b>secure on Number Sense</b> and now <b>emerging on Patterns</b>. This week she
+        independently discovered the “add 3” rule and used a loop to extend a sequence — a real
+        algebra milestone. She’s most engaged in the <b>game-building</b> exercises.
+        <div class="flag">⚠️ Division word problems are still tricky — MØDE is slowing the pace and adding visual hints.</div>
+        <div class="by"><span class="mø">MØ</span> Generated by MØDE Tutor · today, 4:10pm</div>
+      </div>
+    </div>
+
+    <!-- curriculum mastery -->
+    <div class="card col-7">
+      <h3>🧩 Curriculum mastery</h3>
+      <div class="sub">Pedagogical state per module</div>
+      <div class="mastery">
+        <div class="m-row"><div class="m-top"><span>Number Sense &amp; Arithmetic</span><span class="st secure">Secure</span></div><div class="track"><i style="width:92%"></i></div></div>
+        <div class="m-row"><div class="m-top"><span>Patterns &amp; Sequences</span><span class="st emerging">Emerging</span></div><div class="track"><i style="width:54%"></i></div></div>
+        <div class="m-row"><div class="m-top"><span>Shapes &amp; Geometry</span><span class="st emerging">Emerging</span></div><div class="track"><i style="width:31%"></i></div></div>
+        <div class="m-row"><div class="m-top"><span>Logic &amp; Reasoning</span><span class="st locked">Not started</span></div><div class="track"><i style="width:0%"></i></div></div>
+        <div class="m-row"><div class="m-top"><span>Intro to Coding Concepts</span><span class="st locked">Not started</span></div><div class="track"><i style="width:0%"></i></div></div>
+      </div>
+    </div>
+
+    <!-- achievements -->
+    <div class="card col-5">
+      <h3>🏅 Achievements</h3>
+      <div class="sub">8 of 24 earned</div>
+      <div class="badges">
+        <div class="badge"><div class="b">🥇</div><div class="n">First Loop</div></div>
+        <div class="badge"><div class="b">🔥</div><div class="n">4-Day Streak</div></div>
+        <div class="badge"><div class="b">🧮</div><div class="n">Math Whiz</div></div>
+        <div class="badge"><div class="b">🐛</div><div class="n">Bug Hunter</div></div>
+        <div class="badge locked"><div class="b">🚀</div><div class="n">Game Maker</div></div>
+        <div class="badge locked"><div class="b">📐</div><div class="n">Shape Master</div></div>
+      </div>
+    </div>
+
+    <!-- activity feed -->
+    <div class="card col-7">
+      <h3>📜 Recent activity</h3>
+      <div class="sub">Latest sessions &amp; milestones</div>
+      <div class="feed">
+        <div class="ev"><div class="ic">✅</div><div>Completed <b>Lesson 3 · Growing Patterns</b></div><div class="t">Today</div></div>
+        <div class="ev"><div class="ic">🏅</div><div>Earned badge <b>Bug Hunter</b> — fixed her own error</div><div class="t">Today</div></div>
+        <div class="ev"><div class="ic">💬</div><div>14-min Socratic session on number rules</div><div class="t">Yesterday</div></div>
+        <div class="ev"><div class="ic">🎯</div><div>Mastery on <b>Number Sense</b> reached <b>Secure</b></div><div class="t">2 days ago</div></div>
+        <div class="ev"><div class="ic">📘</div><div>Started <b>Shapes &amp; Geometry</b></div><div class="t">3 days ago</div></div>
+      </div>
+    </div>
+
+    <!-- billing -->
+    <div class="card col-5">
+      <h3>💳 Subscription &amp; billing</h3>
+      <div class="sub">Managed securely via Stripe</div>
+      <div class="plan">
+        <div><div class="name">MØDE Core · Family</div><div class="price">$14.00 / month · renews Jul 7, 2026</div></div>
+        <div class="stripe">🔒 Stripe</div>
+      </div>
+      <div class="receipts">
+        <div class="r"><b>Jun 7, 2026</b><span>$14.00 · Paid</span></div>
+        <div class="r"><b>May 7, 2026</b><span>$14.00 · Paid</span></div>
+        <div class="r"><b>Apr 7, 2026</b><span>$14.00 · Paid</span></div>
+      </div>
+      <div class="auto-note">Invoices and monthly progress reports are issued automatically by the MØDE agent — no action needed.</div>
+    </div>
+
+    <!-- safety & privacy -->
+    <div class="card col-12">
+      <h3>🛡️ Safety &amp; privacy controls</h3>
+      <div class="sub">You stay in control — MØDE runs with humans on the loop</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 36px">
+        <div class="toggle"><div class="txt"><div class="t">Daily time limit (45 min)</div><div class="d">Sessions pause and notify you at the cap</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="toggle"><div class="txt"><div class="t">Store mastery, not transcripts</div><div class="d">Data-minimisation — we keep pedagogical state, not raw chats</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="toggle"><div class="txt"><div class="t">Profiling off by default</div><div class="d">No behavioural profiling or ad targeting (UK Children's Code)</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="toggle"><div class="txt"><div class="t">Approve new modules</div><div class="d">Require your OK before MØDE unlocks a new topic</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+        <div class="toggle"><div class="txt"><div class="t">Weekly email report</div><div class="d">Tutor summary delivered to david.r@email.com</div></div><div class="sw on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="toggle"><div class="txt"><div class="t">Export or delete data</div><div class="d">Download or erase Samantha's data anytime (GDPR/POPIA)</div></div><div class="sw" onclick="this.classList.toggle('on')"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* weekly activity bar chart (vanilla canvas) */
+const cv=document.getElementById('activity'),ctx=cv.getContext('2d');
+const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],mins=[35,42,0,28,50,38,22];
+function draw(){
+  const r=cv.parentElement.getBoundingClientRect();
+  cv.width=r.width*devicePixelRatio;cv.height=r.height*devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  const W=r.width,H=r.height,pad=24,base=H-22,max=60;
+  ctx.clearRect(0,0,W,H);
+  // gridlines
+  ctx.strokeStyle='rgba(255,255,255,.06)';ctx.fillStyle='rgba(160,160,176,.7)';ctx.font='10px Inter';
+  for(let v=0;v<=60;v+=20){const y=base-(v/max)*(base-10);ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(W-8,y);ctx.stroke();ctx.fillText(v+'m',2,y+3);}
+  const bw=(W-pad-16)/days.length, bWidth=bw*0.5;
+  days.forEach((d,i)=>{
+    const x=pad+i*bw+bw/2, h=(mins[i]/max)*(base-10), y=base-h;
+    const g=ctx.createLinearGradient(0,y,0,base);g.addColorStop(0,'#00f0ff');g.addColorStop(1,'#8a2be2');
+    ctx.fillStyle=mins[i]?g:'rgba(255,255,255,.08)';
+    ctx.beginPath();ctx.roundRect(x-bWidth/2,y,bWidth,Math.max(h,2),6);ctx.fill();
+    ctx.fillStyle='rgba(160,160,176,.9)';ctx.textAlign='center';ctx.fillText(d,x,base+15);
+    if(mins[i]){ctx.fillStyle='#fff';ctx.font='600 10px Inter';ctx.fillText(mins[i],x,y-5);ctx.font='10px Inter';}
+    ctx.textAlign='left';
+  });
+}
+draw();window.addEventListener('resize',draw);
+</script>
+</body>
+</html>
